@@ -17,7 +17,7 @@ export const encrypt = (text: string, openDate: string) => {
   const date = getDate(openDate);
   const dateKey = getDateSecret(date);
   const publicKeyString = cryptico.publicKeyString(dateKey);
-  const encrypted = cryptico.encrypt(text, publicKeyString, dateKey);
+  const encrypted = cryptico.encrypt(text, publicKeyString, undefined);
   if (encrypted.status === "success" && "cipher" in encrypted) {
     return `${openDate}_${encrypted.cipher}`;
   } else {
@@ -34,7 +34,7 @@ export const decrypt = (input: string) => {
   if (dateNow >= date) {
     const dateKey = getDateSecret(date);
     const decrypted = cryptico.decrypt(split[1], dateKey);
-    if (decrypted.status === "success" && decrypted.signature === "verified" && "plaintext" in decrypted) {
+    if (decrypted.status === "success" && "plaintext" in decrypted) {
       return decrypted.plaintext;
     } else {
       return "Error in decryption"
