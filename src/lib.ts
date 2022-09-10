@@ -5,7 +5,7 @@ const secret = "Placeholder-For-The-Secret";
 
 const getDate = (date: string) => {
   const split = date.split("-");
-  return new Date(Number(split[0]), Number(split[1]) - 1, Number(split[2]));
+  return new Date(Date.UTC(Number(split[0]), Number(split[1]) - 1, Number(split[2])));
 }
 
 const getDateSecret = (date: Date) => {
@@ -28,11 +28,18 @@ export const encrypt = (text: string, openDate: string) => {
 export const decrypt = (input: string) => {
   const split = input.split("_");
   const date = getDate(split[0]);
-  const dateKey = getDateSecret(date);
-  const decrypted = cryptico.decrypt(split[1], dateKey);
-  if (decrypted.status === "success" && decrypted.signature === "verified" && "plaintext" in decrypted) {
-    return decrypted.plaintext;
+  const now = new Date();
+  const dateNow = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(),
+    now.getUTCDate()));
+  if (dateNow >= date) {
+    const dateKey = getDateSecret(date);
+    const decrypted = cryptico.decrypt(split[1], dateKey);
+    if (decrypted.status === "success" && decrypted.signature === "verified" && "plaintext" in decrypted) {
+      return decrypted.plaintext;
+    } else {
+      return "Error in decryption"
+    }
   } else {
-    return "Error in decryption"
+    return "It's not yet time"
   }
 };
