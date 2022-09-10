@@ -4,7 +4,8 @@
   "description": "Backend for Timed Envelope",
   "main": "build/index.js",
   "scripts": {
-    "watch": "npx tsc -w",
+    "start": "webpack --mode development --watch",
+    "build": "webpack --mode production",
     "lint": "eslint . --ext .ts"
   },
   "repository": {
@@ -21,9 +22,13 @@
     "@typescript-eslint/eslint-plugin": "^5.36.2",
     "@typescript-eslint/parser": "^5.36.2",
     "eslint": "^8.23.0",
-    "typescript": "^4.8.3"
+    "ts-loader": "^9.3.1",
+    "typescript": "^4.8.3",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
   },
   "dependencies": {
+    "@daotl/cryptico-node": "^2.0.3",
     "@types/node": "^18.7.16"
   }
 }

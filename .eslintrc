@@ -8,5 +8,14 @@
         "eslint:recommended",
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended"
-    ]
+    ],
+    "rules": {
+        "indent": [
+            "error",
+            2
+        ],
+        "no-trailing-spaces": [
+            "error"
+        ]
+    }
 }
