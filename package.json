@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "@daotl/cryptico-node": "^2.0.3",
-    "@types/node": "^18.7.16",
-    "aws-lambda": "^1.0.7"
+    "@types/aws-lambda": "^8.10.103",
+    "@types/node": "^18.7.16"
   }
 }

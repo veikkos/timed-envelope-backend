@@ -1,10 +1,10 @@
+import { APIGatewayProxyEvent } from "aws-lambda";
 import { getPrivateKey } from "./lib";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-exports.handler = async (event : any) => {
-  const operation = event.requestContext.httpMethod;
+exports.handler = async (event : APIGatewayProxyEvent) => {
+  const method = event.requestContext.httpMethod;
 
-  switch (operation) {
+  switch (method) {
   case 'GET': {
     const privateKey = getPrivateKey("2022-09-11");
     if (privateKey.key) {
@@ -28,7 +28,10 @@ exports.handler = async (event : any) => {
   default:
     return {
       statusCode: 400,
-      body: "Unsupported method",
+      body: JSON.stringify({
+        status: "error",
+        message: "Unsupported method",
+      }),
     };
   }
 };
