@@ -1,4 +1,5 @@
 import { APIGatewayProxyEvent } from "aws-lambda";
+import { responseHeaders } from "./headers";
 import { getPrivateKey } from "./lib";
 
 exports.handler = async (event : APIGatewayProxyEvent) => {
@@ -10,6 +11,7 @@ exports.handler = async (event : APIGatewayProxyEvent) => {
     if (privateKey.key) {
       return {
         statusCode: 200,
+        headers: responseHeaders(),
         body: JSON.stringify({
           status: "success",
           key: privateKey.key,
@@ -18,6 +20,7 @@ exports.handler = async (event : APIGatewayProxyEvent) => {
     } else {
       return {
         statusCode: 400,
+        headers: responseHeaders(),
         body: JSON.stringify({
           status: "error",
           message: privateKey.error,
@@ -28,6 +31,7 @@ exports.handler = async (event : APIGatewayProxyEvent) => {
   default:
     return {
       statusCode: 400,
+      headers: responseHeaders(),
       body: JSON.stringify({
         status: "error",
         message: "Unsupported method",

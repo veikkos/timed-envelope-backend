@@ -37,7 +37,7 @@ export class LambdaApiStack extends Stack {
           'authorization',
           '*'
         ],
-        allowMethods: ['GET'],
+        allowMethods: ['OPTIONS', 'GET'],
         allowCredentials: true,
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         allowOrigins: [process.env.FRONTEND_URI!, process.env.ALTERNATIVE_URI!],

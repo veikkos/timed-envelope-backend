@@ -1,4 +1,5 @@
 import { APIGatewayProxyEvent } from "aws-lambda";
+import { responseHeaders } from "./headers";
 import { getPublicKey } from "./lib";
 
 exports.handler = async (event : APIGatewayProxyEvent) => {
@@ -8,6 +9,7 @@ exports.handler = async (event : APIGatewayProxyEvent) => {
   case 'GET': {
     return {
       statusCode: 200,
+      headers: responseHeaders(),
       body: JSON.stringify({
         status: "success",
         key: getPublicKey("2022-09-11"),
@@ -17,6 +19,7 @@ exports.handler = async (event : APIGatewayProxyEvent) => {
   default:
     return {
       statusCode: 400,
+      headers: responseHeaders(),
       body: JSON.stringify({
         status: "error",
         message: "Unsupported method",
