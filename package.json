@@ -2,10 +2,14 @@
   "name": "timed-envelope-backend",
   "version": "1.0.0",
   "description": "Backend for Timed Envelope",
-  "main": "build/index.js",
   "scripts": {
-    "start": "webpack --mode development --watch",
-    "build": "webpack --mode production",
+    "build": "tsc && webpack",
+    "cdk": "cdk",
+    "tsc": "tsc",
+    "cdk:build": "npm run build && tsc",
+    "cdk:watch": "npm run build && tsc -w",
+    "cdk:synth": "npm run build && cdk synth",
+    "cdk:deploy": "npm run build && cdk deploy TimedEnvelopeApiStack",
     "lint": "eslint . --ext .ts"
   },
   "repository": {
@@ -21,14 +25,20 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.36.2",
     "@typescript-eslint/parser": "^5.36.2",
+    "aws-cdk": "^2.41.0",
+    "aws-cdk-lib": "^2.41.0",
+    "constructs": "^10.1.99",
+    "dotenv": "^16.0.2",
     "eslint": "^8.23.0",
     "ts-loader": "^9.3.1",
+    "ts-node": "^10.9.1",
     "typescript": "^4.8.3",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0"
   },
   "dependencies": {
     "@daotl/cryptico-node": "^2.0.3",
-    "@types/node": "^18.7.16"
+    "@types/node": "^18.7.16",
+    "aws-lambda": "^1.0.7"
   }
 }

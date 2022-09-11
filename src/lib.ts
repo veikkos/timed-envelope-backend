@@ -13,33 +13,21 @@ const getDateSecret = (date: Date) => {
   return cryptico.generateRSAKey(dateSecret, bits);
 }
 
-export const encrypt = (text: string, openDate: string) => {
+export const getPublicKey = (openDate: string) => {
   const date = getDate(openDate);
   const dateKey = getDateSecret(date);
-  const publicKeyString = cryptico.publicKeyString(dateKey);
-  const encrypted = cryptico.encrypt(text, publicKeyString, undefined);
-  if (encrypted.status === "success" && "cipher" in encrypted) {
-    return `${openDate}_${encrypted.cipher}`;
-  } else {
-    return "Error in encoding";
-  }
+  return cryptico.publicKeyString(dateKey);
 };
 
-export const decrypt = (input: string) => {
-  const split = input.split("_");
-  const date = getDate(split[0]);
+export const getPrivateKey = (openDate: string) => {
+  const date = getDate(openDate);
   const now = new Date();
   const dateNow = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(),
     now.getUTCDate()));
   if (dateNow >= date) {
     const dateKey = getDateSecret(date);
-    const decrypted = cryptico.decrypt(split[1], dateKey);
-    if (decrypted.status === "success" && "plaintext" in decrypted) {
-      return decrypted.plaintext;
-    } else {
-      return "Error in decryption"
-    }
+    return { key: JSON.stringify(dateKey.toJSON()) };
   } else {
-    return "It's not yet time"
+    return { error:"It's not yet time" }
   }
 };
