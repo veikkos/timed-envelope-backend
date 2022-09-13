@@ -72,9 +72,10 @@ export class LambdaApiStack extends Stack {
       })
 
       const resource = restApi.root.addResource(lambda.functionName.toLowerCase());
+      const dateResource = resource.addResource("{date}");
 
       lambda.methods.forEach((method: string) =>
-        resource.addMethod(method, new LambdaIntegration(lambdaFunction, {})));
+        dateResource.addMethod(method, new LambdaIntegration(lambdaFunction, {})));
     });
   }
 }

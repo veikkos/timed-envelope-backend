@@ -4,10 +4,22 @@ import { getPrivateKey } from "./lib";
 
 exports.handler = async (event : APIGatewayProxyEvent) => {
   const method = event.requestContext.httpMethod;
+  const date = event.pathParameters?.["date"];
+
+  if (!date) {
+    return {
+      statusCode: 400,
+      headers: responseHeaders(),
+      body: JSON.stringify({
+        status: "error",
+        message: "missing 'date' parameter",
+      }),
+    };
+  }
 
   switch (method) {
   case 'GET': {
-    const privateKey = getPrivateKey("2022-09-11");
+    const privateKey = getPrivateKey(date);
     if (privateKey.key) {
       return {
         statusCode: 200,

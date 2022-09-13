@@ -4,6 +4,18 @@ import { getPublicKey } from "./lib";
 
 exports.handler = async (event : APIGatewayProxyEvent) => {
   const method = event.requestContext.httpMethod;
+  const date = event.pathParameters?.["date"];
+
+  if (!date) {
+    return {
+      statusCode: 400,
+      headers: responseHeaders(),
+      body: JSON.stringify({
+        status: "error",
+        message: "missing 'date' parameter",
+      }),
+    };
+  }
 
   switch (method) {
   case 'GET': {
@@ -12,7 +24,7 @@ exports.handler = async (event : APIGatewayProxyEvent) => {
       headers: responseHeaders(),
       body: JSON.stringify({
         status: "success",
-        key: getPublicKey("2022-09-11"),
+        key: getPublicKey(date),
       }),
     };
   }
