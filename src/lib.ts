@@ -19,8 +19,8 @@ export const getPrivateKey = (openDate: string) => {
   const now = new Date();
   if (now >= date) {
     const dateKey = getDateSecret(date);
-    return { key: JSON.stringify(dateKey.toJSON()) };
+    return { key: dateKey.toJSON() };
   } else {
-    return { error:"It's not yet time" }
+    return { error: "It's not yet time" }
   }
 };

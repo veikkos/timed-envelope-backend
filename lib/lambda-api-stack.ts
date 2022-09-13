@@ -50,7 +50,7 @@ export class LambdaApiStack extends Stack {
     return {
       runtime: Runtime.NODEJS_14_X,
       memorySize: 128,
-      timeout: Duration.seconds(10),
+      timeout: Duration.seconds(20),
     };
   }
 
