@@ -51,6 +51,10 @@ export class LambdaApiStack extends Stack {
       runtime: Runtime.NODEJS_14_X,
       memorySize: 128,
       timeout: Duration.seconds(20),
+      environment:{
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        "SECRET": process.env.SECRET!
+      },
     };
   }
 

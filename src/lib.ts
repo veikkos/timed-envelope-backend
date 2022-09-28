@@ -1,7 +1,7 @@
 import { cryptico } from '@daotl/cryptico-node'
 
 const bits = 1024;
-const secret = "Placeholder-For-The-Secret";
+const secret = process.env.SECRET;
 
 const getDateSecret = (date: Date) => {
   const dateSecret = `${secret}-${date.toISOString()}`;

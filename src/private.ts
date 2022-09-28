@@ -1,5 +1,5 @@
 import { APIGatewayProxyEvent } from "aws-lambda";
-import { responseHeaders } from "./headers";
+import { cacheHeaders, responseHeaders } from "./headers";
 import { getPrivateKey } from "./lib";
 
 exports.handler = async (event : APIGatewayProxyEvent) => {
@@ -23,7 +23,7 @@ exports.handler = async (event : APIGatewayProxyEvent) => {
     if (privateKey.key) {
       return {
         statusCode: 200,
-        headers: responseHeaders(),
+        headers: {...responseHeaders(), ...cacheHeaders()},
         body: JSON.stringify({
           status: "success",
           key: privateKey.key,
